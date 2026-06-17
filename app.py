@@ -1,54 +1,56 @@
 import streamlit as st
-import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
 
-st.set_page_config(page_title="Clickstream Dashboard", layout="wide")
-st.title("🛍️ E-commerce Clickstream Analysis")
-st.markdown("**Clothing Store User Behavior Analysis (2008)**")
+st.set_page_config(page_title="Clickstream Analysis", layout="wide")
 
-# Load data
-@st.cache_data
-def load_data():
-    return pd.read_csv('data/e-shop_cleaned_final.csv')
+st.title("🛍️ E-commerce Clickstream Analysis Dashboard")
+st.markdown("**Clothing Store User Behavior (2008) | End-to-End Project**")
 
-df = load_data()
-
-# Sidebar Filters
-st.sidebar.header("🔍 Filters")
-selected_categories = st.sidebar.multiselect("Categories", df['main_category_name'].unique(), default=df['main_category_name'].unique())
-df_filtered = df[df['main_category_name'].isin(selected_categories)]
+st.success("✅ Dashboard Loaded Successfully!")
 
 # Metrics
-col1, col2, col3, col4 = st.columns(4)
-col1.metric("Total Clicks", f"{len(df):,}")
-col2.metric("Total Sessions", f"{df['session_id'].nunique():,}")
-col3.metric("Avg Clicks/Session", f"{len(df)/df['session_id'].nunique():.2f}")
-col4.metric("Bounce Rate (approx)", "High")
+col1, col2, col3 = st.columns(3)
+col1.metric("Total Clicks", "165,000+")
+col2.metric("Total Sessions", "~45,000")
+col3.metric("Avg Clicks/Session", "3.6")
 
 # Tabs
-tab1, tab2, tab3 = st.tabs(["📊 Overview", "📅 Time Analysis", "💰 Pricing"])
+tab1, tab2, tab3 = st.tabs(["📊 Key Visualizations", "🔍 Insights", "📋 About Project"])
 
 with tab1:
-    st.subheader("Category Distribution")
-    fig1 = plt.figure(figsize=(10,5))
-    df_filtered['main_category_name'].value_counts().plot(kind='bar', color='coral')
-    plt.xticks(rotation=45)
-    st.pyplot(fig1)
+    st.subheader("Most Popular Categories")
+    st.image("visualizations/category_distribution.png")
+
+    st.subheader("Clicks per Session Distribution")
+    st.image("visualizations/clicks_per_session.png")
+
+    st.subheader("Activity by Day of Week")
+    st.image("visualizations/activity_by_day.png")
 
 with tab2:
-    st.subheader("Activity by Day of Week")
-    fig2 = plt.figure(figsize=(10,5))
-    sns.countplot(data=df_filtered, x='day_of_week', 
-                  order=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'])
-    plt.xticks(rotation=45)
-    st.pyplot(fig2)
+    st.subheader("Main Findings")
+    st.markdown("""
+    - **Trousers** is the most popular category (~49,000 clicks)
+    - Highest activity on **Tuesday & Wednesday**
+    - Most sessions are very short (High Bounce Rate)
+    - Country 29 dominates the traffic
+    - Trousers have the highest price range
+    """)
+
+    st.subheader("Business Recommendations")
+    st.markdown("""
+    - Make **Trousers** the flagship category
+    - Improve UX to reduce bounce rate
+    - Run weekend promotions
+    - Focus marketing on top country
+    """)
 
 with tab3:
-    st.subheader("Price Distribution by Category")
-    fig3 = plt.figure(figsize=(10,6))
-    sns.boxplot(data=df_filtered, x='main_category_name', y='price')
-    plt.xticks(rotation=45)
-    st.pyplot(fig3)
+    st.subheader("Project Details")
+    st.write("This is a complete Clickstream Analysis project built as a portfolio piece.")
+    st.write("**Tech Stack**: Python, Pandas, Seaborn, Matplotlib, Streamlit")
+    
+    st.markdown("### Links")
+    st.markdown("- [View Notebooks](notebooks)")
+    st.markdown("- [GitHub Repository](https://github.com/geethalakshmi579/ecommerce-clickstream-analysis)")
 
-st.caption("Clickstream Analysis Project • Built with Streamlit")
+st.caption("Built by Geethalakshmi | Clickstream Analysis Project")
