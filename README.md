@@ -29,8 +29,6 @@ End-to-end clickstream analysis on an online clothing store dataset to understan
 ![Price Distribution by Category](visualizations/price_by_category.png)
 ![Top 10 Countries](visualizations/top_countries.png)
 
----
-
 ### 🔍 Main Findings
 
 1. **Category Performance**
@@ -78,6 +76,7 @@ End-to-end clickstream analysis on an online clothing store dataset to understan
    ```bash
    pip install -r requirements.txt
 
+## Project Structure
 
 clickstream-analysis/
 ├── data/
